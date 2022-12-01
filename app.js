@@ -3,12 +3,27 @@ const ctx = canvas.getContext("2d"); // Brush. Canvas에 그림을 그릴 때 �
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.fillRect(200, 200, 50, 200);
-ctx.fillRect(400, 200, 50, 200);
-ctx.lineWidth = 2;
-ctx.strokeRect(300, 300, 50, 100);
-ctx.fillRect(200, 200, 200, 20);
-ctx.moveTo(200, 200);
-ctx.lineTo(325, 100);
-ctx.lineTo(450, 200);
+ctx.fillRect(215, 200, 15, 100);
+ctx.fillRect(310, 200, 15, 100);
+ctx.fillRect(240, 200, 60, 100);
+ctx.fillRect(240, 310, 15, 100);
+ctx.fillRect(285, 310, 15, 100);
+
+ctx.arc(270, 150, 40, 0, 1.5 * Math.PI); // 동쪽에서 시계 방향으로 돌아감
+ctx.fill();
+
+ctx.beginPath();
+ctx.fillStyle = "brown";
+ctx.arc(270, 150, 40, 1.52 * Math.PI, 1.98 * Math.PI);
+ctx.fill();
+
+ctx.beginPath();
+ctx.fillStyle = "white";
+ctx.arc(255, 140, 7, 0, 2 * Math.PI);
+ctx.arc(285, 140, 7, 0, 2 * Math.PI);
+ctx.fill();
+
+ctx.beginPath();
+ctx.fillStyle = "white";
+ctx.arc(270, 170, 10, 0, Math.PI);
 ctx.fill();
