@@ -3,27 +3,29 @@ const ctx = canvas.getContext("2d"); // Brush. Canvas에 그림을 그릴 때 �
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.fillRect(215, 200, 15, 100);
-ctx.fillRect(310, 200, 15, 100);
-ctx.fillRect(240, 200, 60, 100);
-ctx.fillRect(240, 310, 15, 100);
-ctx.fillRect(285, 310, 15, 100);
+const colors = [
+  "#C5D9F1",
+  "#FFFF00",
+  "#D8E4BC",
+  "#D9D9D9",
+  "#FCD5B4",
+  "#FCD5B4",
+  "#FF0000",
+  "#808080",
+  "#808080",
+  "#1E90FF",
+  "#FFD700",
+  "#FF6347",
+];
 
-ctx.arc(270, 150, 40, 0, 1.5 * Math.PI); // 동쪽에서 시계 방향으로 돌아감
-ctx.fill();
+ctx.lineWidth = 2;
+function onMove(event) {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  ctx.lineTo(event.offsetX, event.offsetY);
+  ctx.strokeStyle = color;
+  ctx.stroke();
+}
 
-ctx.beginPath();
-ctx.fillStyle = "brown";
-ctx.arc(270, 150, 40, 1.52 * Math.PI, 1.98 * Math.PI);
-ctx.fill();
-
-ctx.beginPath();
-ctx.fillStyle = "white";
-ctx.arc(255, 140, 7, 0, 2 * Math.PI);
-ctx.arc(285, 140, 7, 0, 2 * Math.PI);
-ctx.fill();
-
-ctx.beginPath();
-ctx.fillStyle = "white";
-ctx.arc(270, 170, 10, 0, Math.PI);
-ctx.fill();
+canvas.addEventListener("mousemove", onMove);
