@@ -1,3 +1,4 @@
+const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
@@ -54,7 +55,7 @@ function onColorChange(event) {
 }
 
 function onColorClick(event) {
-  console.dir(event.target.dataset.color); // 색상 Hex 코드를 가져옴
+  //console.dir(event.target.dataset.color); // 색상 Hex 코드를 가져옴
   const colorValue = event.target.dataset.color; // Color : HTML의 data-*에서 *
   ctx.strokeStyle = colorValue;
   ctx.fillStyle = colorValue;
@@ -114,6 +115,15 @@ function onDoubleClick(event) {
   }
 }
 
+function onSaveClick() {
+  const url = canvas.toDataURL(); // Canvas에 그린 그림을 URL로 변환(base64로 인코딩됨)
+  const a = document.createElement("a"); // <a href="" download
+  a.href = url; // <a>태그의 href에 그림의 URL로 설정
+  a.download = "myDrawing.png"; // 브라우저가 href에 있는 콘텐츠를 다운로드
+  //console.log(a);
+  a.click();
+}
+
 canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
@@ -130,3 +140,4 @@ modeBtn.addEventListener("click", onModeClick);
 clearBtn.addEventListener("click", onClearClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
