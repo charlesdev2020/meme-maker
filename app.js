@@ -1,5 +1,7 @@
+const textInput = document.getElementById("text");
+const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
-const destroyBtn = document.getElementById("destroy-btn");
+const clearBtn = document.getElementById("clear-btn");
 const eraserBtn = document.getElementById("eraser-btn");
 
 // Foreach 함수를 사용하기 위해 배열로 생성
@@ -17,6 +19,7 @@ const CANVAS_HEIGHT = 800;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
+ctx.lineCap = "round";
 ctx.lineWidth = lineWidth.value;
 let isPainting = false;
 let isFilling = false;
@@ -74,7 +77,7 @@ function onCanvasClick() {
   }
 }
 
-function onDestoryClick() {
+function onClearClick() {
   ctx.fillStyle = "white";
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   //ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -86,6 +89,32 @@ function onEraserClick() {
   modeBtn.innerText = "Fill";
 }
 
+function onFileChange(event) {
+  const file = event.target.files[0];
+  const url = URL.createObjectURL(file);
+  const image = new Image(); // <img src="" />
+  image.src = url; // 브라우저의 메모리를 가리키는 URL
+
+  // Event Listener 추가
+  image.onload = function () {
+    ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // Image가 Load 될 때, canvas에 이미지를 그림
+    fileInput.value = null; // Image를 그릴 때, file Input의 Text를 비움
+  };
+}
+
+function onDoubleClick(event) {
+  const text = textInput.value;
+
+  if (text != "") {
+    ctx.save(); // 현재 상태, 색상, 스타일 등을 저장
+    ctx.lineWidth = 1;
+    ctx.font = "48px serif";
+    ctx.fillText(text, event.offsetX, event.offsetY);
+    ctx.restore(); // Save 상태의 버전으로 되돌림.
+  }
+}
+
+canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -98,5 +127,6 @@ color.addEventListener("change", onColorChange);
 // Foreach를 사용해 onColorClick 함수를 가진 ClickEventListener를 추가
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 modeBtn.addEventListener("click", onModeClick);
-destroyBtn.addEventListener("click", onDestoryClick);
+clearBtn.addEventListener("click", onClearClick);
 eraserBtn.addEventListener("click", onEraserClick);
+fileInput.addEventListener("change", onFileChange);
