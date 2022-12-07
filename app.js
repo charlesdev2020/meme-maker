@@ -4,6 +4,7 @@ const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
 const clearBtn = document.getElementById("clear-btn");
 const eraserBtn = document.getElementById("eraser-btn");
+const span = document.getElementById("span");
 
 // Foreach 함수를 사용하기 위해 배열로 생성
 const colorOptions = Array.from(
@@ -19,11 +20,12 @@ const CANVAS_HEIGHT = 800;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
-
+canvas.style.cursor = "url(images/pencil.png) 4 64, auto";
 ctx.lineCap = "round";
 ctx.lineWidth = lineWidth.value;
 let isPainting = false;
 let isFilling = false;
+var mode = "Draw Mode";
 
 function onMove(event) {
   if (isPainting) {
@@ -34,6 +36,11 @@ function onMove(event) {
   }
   // 마우스를 누른 상태가 아니면 좌표 이동
   ctx.moveTo(event.offsetX, event.offsetY);
+
+  var posX = event.offsetX;
+  var posY = event.offsetY;
+  console.log(mode);
+  span.innerText = mode.concat(" : ", posX, ", ", posY);
 }
 
 function startPainting(event) {
@@ -66,9 +73,15 @@ function onModeClick(event) {
   if (isFilling) {
     isFilling = false;
     modeBtn.innerText = "Fill";
+    ctx.fillStyle = color.value;
+    canvas.style.cursor = "url(images/pencil.png) 4 64, auto";
+    mode = "Draw Mode";
   } else {
     isFilling = true;
     modeBtn.innerText = "Draw";
+    ctx.strokeStyle = color.value;
+    canvas.style.cursor = "url(images/paint_bucket.png) 4 64, auto";
+    mode = "Fill Mode";
   }
 }
 
@@ -88,6 +101,7 @@ function onEraserClick() {
   ctx.strokeStyle = "white";
   isFilling = false;
   modeBtn.innerText = "Fill";
+  canvas.style.cursor = "url(images/eraser.png) 16 64, auto";
 }
 
 function onFileChange(event) {
