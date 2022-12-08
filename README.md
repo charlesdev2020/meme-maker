@@ -1,4 +1,4 @@
-# [2022 UPDATE] MEME MAKER
+# MEME MAKER 2022 UPDATE
 
 Meme-Maker Application built with Javascript and Canvas API
 
